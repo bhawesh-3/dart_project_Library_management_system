@@ -1,1 +1,1 @@
-{"users":[{"id":"U1","name":"Bhawesh","borrowedBooks":[]},{"id":"U2","name":"Pravas","borrowedBooks":[]}]}
+{"admins":[{"username":"admin","password":"admin123"}],"users":[{"id":"U1","name":"Bhawesh","borrowedBooks":[]},{"id":"U2","name":"Pravas","borrowedBooks":[]}]}
