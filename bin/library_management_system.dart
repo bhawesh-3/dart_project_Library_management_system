@@ -24,7 +24,6 @@ void main() {
       exit(0);
     } else {
       print('\nInvalid choice. Please enter 1, 2, or 3.\n');
-      // Don't return - continue the loop
     }
   }
 }
@@ -78,7 +77,7 @@ void adminPage() {
     print("Enter 2 to  Add book");
     print("Enetr 3 to Delete book");
     print("Enter 4 to Update book availability");
-    print("Enter 5 to  View borrowed books");
+    print("Enter 5 to View borrowed books");
     print("Enter 0 Logout");
 
     stdout.write('Enter your choice: ');
@@ -123,7 +122,6 @@ void adminPage() {
         stdout.write("Set availability (true/false): ");
         String? value = stdin.readLineSync();
 
-        // Add null/empty checks
         if (id == null || id.isEmpty || value == null || value.isEmpty) {
           print("Book ID and availability value cannot be empty.");
           break;
