@@ -1,22 +1,23 @@
 class User {
-  int id;
+  String id;
   String name;
-  List<int> borrowedBooks;
+  List<String> borrowedBooks;
 
-  User({required this.id, required this.name, List<int>? borrowedBooks})
-    : borrowedBooks = borrowedBooks ?? [];
+  User({
+    required this.id,
+    required this.name,
+    List<String>? borrowedBooks,
+  }) : borrowedBooks = borrowedBooks ?? [];
 
-  // for json (user to map)
-  Map<String, dynamic> toJson() {
-    return {'id': id, 'name': name, 'borrowedBooks': borrowedBooks};
-  }
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "borrowedBooks": borrowedBooks,
+  };
 
-  // from json (Map to User )
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      name: json['name'],
-      borrowedBooks: json['borrowedBooks'],
-    );
-  }
+  factory User.fromJson(Map<String, dynamic> json) => User(
+    id: json['id'],
+    name: json['name'],
+    borrowedBooks: List<String>.from(json['borrowedBooks']),
+  );
 }

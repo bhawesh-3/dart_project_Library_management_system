@@ -1,5 +1,5 @@
 class Book {
-  int id;
+  String id;
   String title;
   String author;
   bool isAvailable;
@@ -11,23 +11,17 @@ class Book {
     required this.isAvailable,
   });
 
-  // for JSON (Book to Map)
-  Map<String, dynamic> toJson() {
-    return {
-      "id": id,
-      "title": title,
-      "author": author,
-      "isAvailable": isAvailable,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "title": title,
+    "author": author,
+    "isAvailable": isAvailable,
+  };
 
-  // from JSON (Map to Book)
-  factory Book.fromJSON(Map<String, dynamic> json) {
-    return Book(
-      id: json['id'],
-      title: json['title'],
-      author: json['author'],
-      isAvailable: json['isAvailable'],
-    );
-  }
+  factory Book.fromJson(Map<String, dynamic> json) => Book(
+    id: json['id'],
+    title: json['title'],
+    author: json['author'],
+    isAvailable: json['isAvailable'],
+  );
 }

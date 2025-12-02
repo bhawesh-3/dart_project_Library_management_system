@@ -1,27 +1,30 @@
 import 'dart:io';
+import 'package:library_management_system/services/auth_service.dart';
+import 'package:library_management_system/services/library_service.dart';
 
-final authService = authService();
-final libraryService = libraryService();
+final authService = AuthService();
+final libraryService = LibraryService();
 
 void main() {
   while (true) {
-    print('\n ======Library Management System=====');
-    print('Press 1 for Admin Login ');
-    print('Press 2 for User Login ');
-    print('Press 3 to Exit ');
+    print('\n====== Library Management System ======');
+    print('Press 1 for Admin Login');
+    print('Press 2 for User Login');
+    print('Press 3 to Exit');
 
-    stdout.write("Enter your choice : ");
+    stdout.write("\nEnter your choice: ");
     final String? loginType = stdin.readLineSync();
 
     if (loginType == '1') {
-      return adminLogin();
+      adminLogin();
     } else if (loginType == "2") {
-      return userLogin();
+      userLogin();
     } else if (loginType == "3") {
-      print("Thank you for using");
+      print("\nThank you for using the Library Management System!");
+      exit(0);
     } else {
-      print('Enter a valid choice');
-      return;
+      print('\nInvalid choice. Please enter 1, 2, or 3.\n');
+      // Don't return - continue the loop
     }
   }
 }
@@ -29,14 +32,20 @@ void main() {
 void adminLogin() {
   stdout.write('Enter your Username: ');
   String? username = stdin.readLineSync();
-
+  
   stdout.write('Enter your password: ');
   String? password = stdin.readLineSync();
+  
+  if (username == null || username.isEmpty || 
+      password == null || password.isEmpty) {
+    print("Username and password cannot be empty.");
+    return;
+  }
 
-  bool success = authService.loginAdmin(username!, password!);
+  bool success = authService.loginAdmin(username, password);
 
   if (success) {
-    print('\n Admin login Successful');
+    print('\nAdmin login Successful!');
     adminPage();
   } else {
     print("Invalid username or password");
@@ -46,11 +55,16 @@ void adminLogin() {
 void userLogin() {
   stdout.write("Enter your ID: ");
   String? id = stdin.readLineSync();
+  
+  if (id == null || id.isEmpty) {
+    print("User ID cannot be empty.");
+    return;
+  }
 
-  bool success = authService.loginUser(id!);
+  bool success = authService.loginUser(id);
 
   if (success) {
-    print("\n Login Successful");
+    print("\nLogin Successful!");
     userPage(id);
   } else {
     print("Invalid user Id");
@@ -59,7 +73,7 @@ void userLogin() {
 
 void adminPage() {
   while (true) {
-    print("====Admin Menu====");
+    print("\n ====Admin Menu====");
     print("Enter 1 to View all books");
     print("Enter 2 to  Add book");
     print("Enetr 3 to Delete book");
@@ -82,25 +96,42 @@ void adminPage() {
         stdout.write("Enter author: ");
         String? author = stdin.readLineSync();
 
-        libraryService.addBook(title!, author!);
+        if (title == null || title.isEmpty || author == null || author.isEmpty) {
+          print("Title and author cannot be empty.");
+          break;
+        }
+
+        libraryService.addBook(title, author);
         break;
 
       case '3':
         stdout.write("Enter a book id to delete: ");
         String? id = stdin.readLineSync();
 
-        libraryService.deleteBook(id!);
+        if (id == null || id.isEmpty) {
+          print("Book ID cannot be empty.");
+          break;
+        }
+
+        libraryService.deleteBook(id);
         break;
-        
-      case '4': 
+
+      case '4':
         stdout.write("Enter book ID: ");
         String? id = stdin.readLineSync();
 
         stdout.write("Set availability (true/false): ");
         String? value = stdin.readLineSync();
 
-        libraryService.updateAvailability(id!, value == "true");
+        // Add null/empty checks
+        if (id == null || id.isEmpty || value == null || value.isEmpty) {
+          print("Book ID and availability value cannot be empty.");
+          break;
+        }
+        
+        libraryService.updateAvailability(id, value.toLowerCase() == "true");
         break;
+
 
       case '5':
         libraryService.viewBorrowedBooks();
@@ -115,7 +146,6 @@ void adminPage() {
     }
   }
 }
-
 
 void userPage(String userId) {
   while (true) {
@@ -137,14 +167,24 @@ void userPage(String userId) {
         stdout.write("Enter book ID to borrow: ");
         String? id = stdin.readLineSync();
 
-        libraryService.borrowBook(userId, id!);
+        if (id == null || id.isEmpty) {
+          print("Book ID cannot be empty.");
+          break;
+        }
+
+        libraryService.borrowBook(userId, id);
         break;
 
       case '3':
         stdout.write("Enter book ID to return: ");
         String? id = stdin.readLineSync();
 
-        libraryService.returnBook(userId, id!);
+         if (id == null || id.isEmpty) {
+            print("Book ID cannot be empty.");
+            break;
+          }
+
+        libraryService.returnBook(userId, id);
         break;
 
       case '0':
