@@ -12,16 +12,16 @@ class Book {
   });
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "author": author,
-    "isAvailable": isAvailable,
-  };
+        'id': id,
+        'title': title,
+        'author': author,
+        'isAvailable': isAvailable,
+      };
 
   factory Book.fromJson(Map<String, dynamic> json) => Book(
-    id: json['id'],
-    title: json['title'],
-    author: json['author'],
-    isAvailable: json['isAvailable'],
-  );
+        id: json['id'] as String,
+        title: json['title'] as String,
+        author: json['author'] as String,
+        isAvailable: json['isAvailable'] as bool,
+      );
 }
